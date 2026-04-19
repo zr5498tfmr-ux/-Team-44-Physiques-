@@ -312,7 +312,7 @@
 
                 <div class="form-actions">
                     <button type="submit" class="btn-primary">Submit Inquiry</button>
-                    <p class="form-note">Submitting will open your email app with your inquiry pre-filled. We&rsquo;ll respond within 48 hours.</p>
+                    <p class="form-note">We&rsquo;ll respond within 48 hours.</p>
                 </div>
             </form>
 
@@ -356,29 +356,63 @@
             if (!document.querySelector('.nav').contains(e.target)) closeNav();
         });
 
+        // Paste the Apps Script Web App URL here after deploying inquiry-apps-script.gs.
+        // See inquiry-apps-script.gs for deployment steps.
+        var INQUIRY_ENDPOINT = '';
+
         function submitInquiry(e) {
             e.preventDefault();
             var f = e.target;
+            var els = f.elements;
             var status = document.getElementById('inq-status');
-            var to = ['fentydavid', 'nursec22b'].map(function(u){ return u + '@yahoo.com'; }).join(',');
-            var subject = 'New Coaching Inquiry — ' + (f.name.value || '').trim();
-            var lines = [
-                'Name: '       + f.name.value,
-                'Email: '      + f.email.value,
-                'Phone: '      + (f.phone.value || '—'),
-                'Interest: '   + f.interest.value,
-                'Timeline: '   + (f.timeline.value || '—'),
-                'Experience: ' + (f.experience.value || '—'),
-                '',
-                'Goals:',
-                f.goals.value
-            ];
-            var href = 'mailto:' + to +
-                '?subject=' + encodeURIComponent(subject) +
-                '&body='    + encodeURIComponent(lines.join('\n'));
-            status.textContent = 'Opening your email app… if nothing happens, please make sure a mail app is configured.';
-            status.classList.add('form-status-ok');
-            window.location.href = href;
+            var btn = f.querySelector('button[type="submit"]');
+
+            if (!INQUIRY_ENDPOINT) {
+                status.textContent = 'Inquiry form is not configured yet. Please reach us on Instagram @44physiques.';
+                status.className = 'form-status form-status-err';
+                return false;
+            }
+
+            var payload = {
+                name:       els['name'].value,
+                email:      els['email'].value,
+                phone:      els['phone'].value,
+                interest:   els['interest'].value,
+                timeline:   els['timeline'].value,
+                experience: els['experience'].value,
+                goals:      els['goals'].value,
+                submittedAt: new Date().toISOString()
+            };
+
+            btn.disabled = true;
+            var originalLabel = btn.textContent;
+            btn.textContent = 'Sending…';
+            status.textContent = 'Sending your inquiry…';
+            status.className = 'form-status';
+
+            fetch(INQUIRY_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            })
+                .then(function(r) { return r.json(); })
+                .then(function(res) {
+                    if (res && res.ok) {
+                        f.reset();
+                        status.textContent = 'Thanks! Your inquiry is on its way. We\u2019ll be in touch within 48 hours.';
+                        status.className = 'form-status form-status-ok';
+                        btn.textContent = 'Sent \u2713';
+                    } else {
+                        throw new Error((res && res.error) || 'Unknown error');
+                    }
+                })
+                .catch(function() {
+                    status.textContent = 'Something went wrong. Please try again or reach us on Instagram @44physiques.';
+                    status.className = 'form-status form-status-err';
+                    btn.disabled = false;
+                    btn.textContent = originalLabel;
+                });
+
             return false;
         }
     </script>
