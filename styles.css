@@ -847,17 +847,14 @@ section { position: relative; z-index: 1; }
 
 .transformation-card {
     position: relative;
-    overflow: hidden;
     border-radius: 2px;
     border: 1px solid var(--border);
-    aspect-ratio: 3 / 4;
     background: var(--card-bg);
 }
 
 .transformation-img {
     width: 100%;
-    height: 100%;
-    object-fit: contain;
+    height: auto;
     display: block;
 }
 
