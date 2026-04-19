@@ -15,29 +15,51 @@
  *   8. Copy the Web app URL (format: https://script.google.com/macros/s/.../exec)
  *   9. Paste that URL into INQUIRY_ENDPOINT at the top of index.html
  *
- * ===== RE-DEPLOY AFTER CHANGES =====
- *   After editing this file in the Apps Script editor, click Deploy →
- *   Manage deployments → Edit (pencil) → Version: New version → Deploy.
+ * ===== RE-DEPLOY AFTER EDITING =====
+ *   Deploy → Manage deployments → Edit (pencil) → Version: New version → Deploy.
  *   The URL stays the same.
  */
 
 const COACH_EMAILS = ['fentydavid@yahoo.com', 'cindybot1231@gmail.com'];
 
 function doPost(e) {
+  // Capture everything we can so the browser gets a clear error on failure.
+  let stage = 'start';
+  let rawBody = '';
   try {
-    const data = JSON.parse(e.postData.contents);
-    const name = (data.name || 'Unknown').toString().trim();
+    stage = 'read-body';
+    rawBody = (e && e.postData && e.postData.contents) ? e.postData.contents : '';
+    if (!rawBody && e && e.parameter) {
+      rawBody = JSON.stringify(e.parameter);
+    }
+    Logger.log('Raw body: ' + rawBody);
 
+    stage = 'parse-json';
+    const data = rawBody ? JSON.parse(rawBody) : {};
+
+    stage = 'validate';
+    if (!data.name || !data.email || !data.goals) {
+      throw new Error('Missing required fields (name, email, goals).');
+    }
+
+    stage = 'send-mail';
+    const name = String(data.name).trim();
     MailApp.sendEmail({
       to: COACH_EMAILS.join(','),
-      replyTo: (data.email || '').toString().trim(),
+      replyTo: String(data.email || '').trim(),
       subject: '44 Physiques — New Coaching Inquiry from ' + name,
       htmlBody: buildEmailHtml(data)
     });
 
     return json({ ok: true });
   } catch (err) {
-    return json({ ok: false, error: err.message });
+    Logger.log('doPost failed at stage=' + stage + ' error=' + err + ' body=' + rawBody);
+    return json({
+      ok: false,
+      stage: stage,
+      error: String(err && err.message ? err.message : err),
+      receivedBodyLength: rawBody.length
+    });
   }
 }
 
@@ -84,4 +106,27 @@ function json(obj) {
   return ContentService
     .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * Run this function manually from the Apps Script editor (Run button)
+ * to test the mailer end-to-end without going through the web form.
+ * If it works here but fails from the website, the script itself is fine
+ * and the issue is in how the browser request is reaching it.
+ */
+function testMail() {
+  const result = doPost({
+    postData: {
+      contents: JSON.stringify({
+        name: 'Test User',
+        email: 'test@example.com',
+        phone: '555-1234',
+        interest: 'Contest Prep',
+        timeline: 'Show in 12 weeks',
+        experience: 'Intermediate (1–3 yrs)',
+        goals: 'This is a test inquiry submitted via testMail().'
+      })
+    }
+  });
+  Logger.log(result.getContent());
 }

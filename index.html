@@ -395,19 +395,27 @@
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify(payload)
             })
-                .then(function(r) { return r.json(); })
-                .then(function(res) {
+                .then(function(r) { return r.text().then(function(t){ return { status: r.status, text: t }; }); })
+                .then(function(r) {
+                    var res;
+                    try { res = JSON.parse(r.text); } catch (_) { res = null; }
                     if (res && res.ok) {
                         f.reset();
                         status.textContent = 'Thanks! Your inquiry is on its way. We\u2019ll be in touch within 48 hours.';
                         status.className = 'form-status form-status-ok';
                         btn.textContent = 'Sent \u2713';
-                    } else {
-                        throw new Error((res && res.error) || 'Unknown error');
+                        return;
                     }
+                    var detail = res && res.error
+                        ? 'Error: ' + res.error + (res.stage ? ' (stage: ' + res.stage + ')' : '')
+                        : 'HTTP ' + r.status + ' — ' + (r.text.slice(0, 200) || 'empty response');
+                    status.textContent = 'Something went wrong. ' + detail;
+                    status.className = 'form-status form-status-err';
+                    btn.disabled = false;
+                    btn.textContent = originalLabel;
                 })
-                .catch(function() {
-                    status.textContent = 'Something went wrong. Please try again or reach us on Instagram @44physiques.';
+                .catch(function(err) {
+                    status.textContent = 'Network error: ' + (err && err.message ? err.message : err);
                     status.className = 'form-status form-status-err';
                     btn.disabled = false;
                     btn.textContent = originalLabel;
