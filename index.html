@@ -76,7 +76,7 @@
 
             <div class="services-grid">
                 <div class="service-card">
-                    <span class="service-icon">&#127829;</span>
+                    <span class="service-icon">&#127822;</span>
                     <h3 class="service-name">Online Coaching &amp; Nutrition</h3>
                     <p class="service-desc">Fully personalized training and nutrition programming delivered remotely, with weekly check-ins and real-time plan adjustments.</p>
                 </div>
@@ -246,29 +246,77 @@
 
     <!-- ===== CONTACT / CTA ===== -->
     <section id="contact" class="contact-section">
-        <div class="section-inner" style="text-align: center;">
-            <p class="section-label">Ready to Start</p>
-            <h2 class="section-title">Start Your Transformation</h2>
-            <div class="section-bar" style="margin-left: auto; margin-right: auto;"></div>
-            <p class="section-sub" style="margin: 0 auto 40px;">Reach out directly to discuss your goals and find the right package for your timeline. We&rsquo;ll build the plan around you.</p>
-
-            <div class="hero-btns">
-                <a href="<https://zr5498tfmr-ux.github.io/44Physiques-check-in-form/>" class="btn-primary" target="_blank" rel="noopener">Athlete Check-In Form</a>
+        <div class="section-inner contact-inner">
+            <div class="contact-header">
+                <p class="section-label">Ready to Start</p>
+                <h2 class="section-title">Start Your Transformation</h2>
+                <div class="section-bar"></div>
+                <p class="section-sub">Tell us about your goals and timeline. Submit the inquiry below and we&rsquo;ll get back to you to discuss the right package for you.</p>
             </div>
 
+            <form id="inquiryForm" class="inquiry-form" onsubmit="return submitInquiry(event)">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="inq-name">Full Name <span class="req">*</span></label>
+                        <input id="inq-name" name="name" type="text" required autocomplete="name">
+                    </div>
+                    <div class="form-field">
+                        <label for="inq-email">Email Address <span class="req">*</span></label>
+                        <input id="inq-email" name="email" type="email" required autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="inq-phone">Phone (optional)</label>
+                        <input id="inq-phone" name="phone" type="tel" autocomplete="tel">
+                    </div>
+                    <div class="form-field">
+                        <label for="inq-interest">Coaching Interest <span class="req">*</span></label>
+                        <select id="inq-interest" name="interest" required>
+                            <option value="">Select a service&hellip;</option>
+                            <option>Online Coaching &amp; Nutrition</option>
+                            <option>Contest Prep</option>
+                            <option>Rush / Emergency Prep</option>
+                            <option>Offseason Prep</option>
+                            <option>Lifestyle Coaching</option>
+                            <option>Posing</option>
+                            <option>Not sure yet</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="inq-timeline">Target Timeline / Show Date (optional)</label>
+                        <input id="inq-timeline" name="timeline" type="text" placeholder="e.g. Show on June 14, or starting in 4 weeks">
+                    </div>
+                    <div class="form-field">
+                        <label for="inq-experience">Training Experience (optional)</label>
+                        <select id="inq-experience" name="experience">
+                            <option value="">Select&hellip;</option>
+                            <option>Beginner (0&ndash;1 yrs)</option>
+                            <option>Intermediate (1&ndash;3 yrs)</option>
+                            <option>Advanced (3+ yrs)</option>
+                            <option>Competitor</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-field form-field-full">
+                    <label for="inq-goals">Tell Us About Your Goals <span class="req">*</span></label>
+                    <textarea id="inq-goals" name="goals" rows="5" required placeholder="Share your current stats, training history, what you&rsquo;re trying to accomplish, and anything else we should know."></textarea>
+                </div>
+
+                <p id="inq-status" class="form-status" role="status" aria-live="polite"></p>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Submit Inquiry</button>
+                    <p class="form-note">Submitting will open your email app with your inquiry pre-filled. We&rsquo;ll respond within 48 hours.</p>
+                </div>
+            </form>
+
             <div class="contact-items">
-                <div class="contact-item">
-                    <span class="contact-icon">&#9993;</span>
-                    <a href="mailto:fentydavid@yahoo.com">fentydavid@yahoo.com</a>
-                </div>
-                <div class="contact-item">
-                    <span class="contact-icon">&#9993;</span>
-                    <a href="mailto:nursec22b@yahoo.com">nursec22b@yahoo.com</a>
-                </div>
-                <div class="contact-item">
-                    <span class="contact-icon">&#128222;</span>
-                    <a href="tel:+13525401695">352-540-1695</a>
-                </div>
                 <div class="contact-item">
                     <span class="contact-icon">&#128247;</span>
                     <span>@44physiques</span>
@@ -307,6 +355,32 @@
         document.addEventListener('click', function(e) {
             if (!document.querySelector('.nav').contains(e.target)) closeNav();
         });
+
+        function submitInquiry(e) {
+            e.preventDefault();
+            var f = e.target;
+            var status = document.getElementById('inq-status');
+            var to = ['fentydavid', 'nursec22b'].map(function(u){ return u + '@yahoo.com'; }).join(',');
+            var subject = 'New Coaching Inquiry — ' + (f.name.value || '').trim();
+            var lines = [
+                'Name: '       + f.name.value,
+                'Email: '      + f.email.value,
+                'Phone: '      + (f.phone.value || '—'),
+                'Interest: '   + f.interest.value,
+                'Timeline: '   + (f.timeline.value || '—'),
+                'Experience: ' + (f.experience.value || '—'),
+                '',
+                'Goals:',
+                f.goals.value
+            ];
+            var href = 'mailto:' + to +
+                '?subject=' + encodeURIComponent(subject) +
+                '&body='    + encodeURIComponent(lines.join('\n'));
+            status.textContent = 'Opening your email app… if nothing happens, please make sure a mail app is configured.';
+            status.classList.add('form-status-ok');
+            window.location.href = href;
+            return false;
+        }
     </script>
 
 </body>
