@@ -857,13 +857,8 @@ section { position: relative; z-index: 1; }
 .transformation-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
-    transition: transform 0.5s ease;
-}
-
-.transformation-card:hover .transformation-img {
-    transform: scale(1.04);
 }
 
 .transformation-overlay {
@@ -905,7 +900,6 @@ section { position: relative; z-index: 1; }
 
 @media (max-width: 768px) {
     .transformations-grid { grid-template-columns: 1fr; gap: 12px; }
-    .transformation-card { aspect-ratio: 4 / 3; }
     .nav-links, .nav-cta { display: none; }
     .nav-hamburger { display: flex; }
     .hero { padding: 72px 20px 60px; }
