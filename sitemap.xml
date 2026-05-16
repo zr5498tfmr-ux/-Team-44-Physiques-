@@ -31,6 +31,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://zr5498tfmr-ux.github.io/44Physiques-check-in-form/</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/contest-prep/</loc>
     <lastmod>2026-05-16</lastmod>
     <changefreq>monthly</changefreq>
@@ -59,11 +65,5 @@
     <lastmod>2026-05-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://zr5498tfmr-ux.github.io/44Physiques-check-in-form/</loc>
-    <lastmod>2026-05-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
 </urlset>
