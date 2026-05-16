@@ -1014,3 +1014,76 @@ section { position: relative; z-index: 1; }
     .hero-mantra { font-size: 0.8rem; letter-spacing: 3px; }
     .section-inner { padding: 64px 20px; }
 }
+
+/* ===== SERVICE PAGES & NAV DROPDOWN (additive only) ===== */
+a.service-card {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+}
+
+.nav-links li.has-sub { position: relative; }
+.nav-links li.has-sub > a::after {
+    content: ' \25BE';
+    font-size: 0.7em;
+    opacity: 0.7;
+}
+.nav-sub {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    min-width: 210px;
+    background: rgba(8,8,8,0.98);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 16px 44px rgba(0,0,0,0.55);
+    z-index: 210;
+}
+.nav-links li.has-sub:hover .nav-sub,
+.nav-links li.has-sub:focus-within .nav-sub {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(4px);
+}
+.nav-sub a {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    padding: 11px 14px;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+.nav-sub a:hover { color: var(--white); background: rgba(196,30,42,0.12); }
+
+.svc-breadcrumb {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-dark);
+    margin-bottom: 26px;
+}
+.svc-breadcrumb a {
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.svc-breadcrumb a:hover { color: var(--red); }
+.svc-breadcrumb span { margin: 0 8px; color: var(--gray-dark); }

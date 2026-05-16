@@ -17,11 +17,19 @@
 ## Coaching Services
 
 - Online Coaching & Nutrition — fully personalized remote training and nutrition with weekly check-ins and real-time adjustments.
-- Contest Prep — show-date-driven nutrition, training, cardio, and posing for bodybuilding, bikini, physique, and figure competitors.
-- Rush Prep — emergency flat-rate prep for competitors 4–5 weeks out from a show.
-- Offseason Prep — structured muscle-building programming to maximize size while managing body fat between shows.
-- Lifestyle Coaching — sustainable body composition, health, and habit coaching for non-competitors.
-- Posing Coaching — stage presentation coaching via FaceTime (remote) or in-person (Florida).
+- Contest Prep — show-date-driven nutrition, training, cardio, and posing for bodybuilding, bikini, physique, and figure competitors. Page: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/contest-prep/
+- Rush Prep — emergency flat-rate prep for competitors 4–5 weeks out from a show. Page: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/rush-prep/
+- Offseason Prep — structured muscle-building programming to maximize size while managing body fat between shows. Page: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/offseason-prep/
+- Lifestyle Coaching — sustainable body composition, health, and habit coaching for non-competitors. Page: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/lifestyle-coaching/
+- Posing Coaching — stage presentation coaching via FaceTime (remote) or in-person (Florida). Page: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/posing-coaching/
+
+## Service Pages
+
+- Contest Prep: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/contest-prep/
+- Rush Prep: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/rush-prep/
+- Lifestyle Coaching: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/lifestyle-coaching/
+- Offseason Prep: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/offseason-prep/
+- Posing Coaching: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/posing-coaching/
 
 ## Pricing
 
@@ -84,4 +92,9 @@
 - Pricing: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/#pricing
 - FAQ: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/#faq
 - Contact / Inquiry: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/#contact
+- Contest Prep page: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/contest-prep/
+- Rush Prep page: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/rush-prep/
+- Lifestyle Coaching page: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/lifestyle-coaching/
+- Offseason Prep page: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/offseason-prep/
+- Posing Coaching page: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/services/posing-coaching/
 - Athlete Check-In Form: https://zr5498tfmr-ux.github.io/44Physiques-check-in-form/
