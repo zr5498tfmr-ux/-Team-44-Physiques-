@@ -1,5 +1,5 @@
 # robots.txt — 44 Physiques
-# AI / LLM / search agents explicitly welcome.
+# AI / LLM / search agents are explicitly welcome to crawl this site.
 
 User-agent: GPTBot
 Allow: /
