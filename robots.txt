@@ -40,4 +40,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://zr5498tfmr-ux.github.io/-Team-44-Physiques-/sitemap.xml
+Sitemap: https://team44physiques.com/sitemap.xml
