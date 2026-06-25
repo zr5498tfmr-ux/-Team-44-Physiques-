@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlete Progress | 44 Physiques</title>
+    <meta name="description" content="44 Physiques athlete progress dashboard. Log in with your email and personal access code to view your check-in history and trend charts.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://team44physiques.com/progress.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="image/favicon.svg" type="image/svg+xml">
+
+    <style>
+        :root {
+            --black:        #0a0a0a;
+            --panel:        #141414;
+            --card-bg:      #1a1a1a;
+            --border:       #333333;
+            --red:          #c41e2a;
+            --red-hover:    #e02535;
+            --white:        #ffffff;
+            --gray:         #999999;
+            --green:        #28a745;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-weight: 600;
+        }
+
+        a { color: var(--red); text-decoration: none; }
+        a:hover { color: var(--red-hover); }
+
+        /* ---------- Nav ---------- */
+        .nav {
+            background: var(--black);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--white);
+        }
+        .nav-brand span { color: var(--red); }
+        .nav-back {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--gray);
+        }
+        .nav-back:hover { color: var(--white); }
+
+        /* ---------- Layout ---------- */
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        .page-head { text-align: center; margin-bottom: 36px; }
+        .page-head h1 {
+            font-size: 2.4rem;
+            line-height: 1.1;
+        }
+        .page-head h1 em { font-style: normal; color: var(--red); }
+        .page-head p {
+            color: var(--gray);
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        /* ---------- Login card ---------- */
+        .login-card {
+            max-width: 440px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 32px 28px;
+        }
+        .login-card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+        }
+        .login-card .sub {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+        .field { margin-bottom: 18px; }
+        .field label {
+            display: block;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 6px;
+        }
+        .field input {
+            width: 100%;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px 14px;
+            color: var(--white);
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.15s ease;
+        }
+        .field input:focus {
+            outline: none;
+            border-color: var(--red);
+        }
+        .field input::placeholder { color: #555; }
+        #codeInput { text-transform: uppercase; letter-spacing: 0.18em; }
+
+        .btn {
+            width: 100%;
+            background: var(--red);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            padding: 13px 16px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+        .btn:hover { background: var(--red-hover); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .hint {
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* ---------- Messages ---------- */
+        .msg {
+            margin-top: 16px;
+            padding: 12px 14px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .msg.error {
+            display: block;
+            background: rgba(196, 30, 42, 0.12);
+            border: 1px solid var(--red);
+            color: #ff8c95;
+        }
+        .msg.info {
+            display: block;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            color: var(--gray);
+        }
+
+        /* ---------- Spinner ---------- */
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: var(--white);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ---------- Dashboard ---------- */
+        #dashboard { display: none; }
+
+        .dash-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .dash-head h2 { font-size: 1.8rem; }
+        .dash-head .meta { color: var(--gray); font-size: 0.9rem; }
+        .dash-head .athlete-name { color: var(--red); }
+        .link-btn {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--gray);
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.8rem;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .link-btn:hover { border-color: var(--red); color: var(--white); }
+
+        .section-title {
+            font-size: 1.2rem;
+            margin: 32px 0 16px;
+            color: var(--white);
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 18px;
+        }
+        .chart-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 18px 14px;
+        }
+        .chart-card h3 {
+            font-size: 0.95rem;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .chart-card .latest {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+        .chart-card .latest b { color: var(--red); font-size: 1.1rem; }
+        .chart-canvas-wrap { position: relative; height: 200px; }
+
+        /* ---------- Table ---------- */
+        .table-scroll {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--card-bg);
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+        thead th {
+            background: var(--panel);
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-size: 0.72rem;
+            color: var(--gray);
+            text-align: left;
+            padding: 12px 14px;
+            position: sticky;
+            top: 0;
+            border-bottom: 1px solid var(--border);
+        }
+        tbody td {
+            padding: 11px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--white);
+        }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover td { background: rgba(255,255,255,0.02); }
+        td.date-cell { color: var(--red); font-weight: 500; }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--gray);
+        }
+        .empty-state h3 { color: var(--white); margin-bottom: 8px; }
+
+        footer {
+            border-top: 1px solid var(--border);
+            text-align: center;
+            padding: 28px 24px;
+            color: var(--gray);
+            font-size: 0.82rem;
+        }
+        footer .brand { font-family: 'Oswald', sans-serif; color: var(--white); letter-spacing: 0.05em; }
+        footer .brand span { color: var(--red); }
+
+        @media (max-width: 600px) {
+            .page-head h1 { font-size: 1.9rem; }
+            .wrap { padding: 28px 16px 60px; }
+            .charts-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="https://team44physiques.com/" class="nav-brand"><span>44</span> Physiques</a>
+            <a href="https://team44physiques.com/" class="nav-back">&larr; Back to site</a>
+        </div>
+    </nav>
+
+    <div class="wrap">
+        <!-- ===== Login view ===== -->
+        <section id="loginView">
+            <div class="page-head">
+                <h1>Athlete <em>Progress</em></h1>
+                <p>Track your check-in history and trends over time.</p>
+            </div>
+
+            <div class="login-card">
+                <h2>Log In</h2>
+                <p class="sub">Enter the email you check in with and your personal access code.</p>
+
+                <form id="loginForm" autocomplete="on">
+                    <div class="field">
+                        <label for="emailInput">Email</label>
+                        <input type="email" id="emailInput" name="email" placeholder="you@example.com" required autocomplete="email">
+                    </div>
+                    <div class="field">
+                        <label for="codeInput">Access Code</label>
+                        <input type="text" id="codeInput" name="code" placeholder="6-character code" maxlength="6" required autocapitalize="characters" autocorrect="off" spellcheck="false">
+                    </div>
+                    <button type="submit" class="btn" id="loginBtn">View My Progress</button>
+                </form>
+
+                <div class="msg" id="loginMsg"></div>
+
+                <p class="hint">
+                    Your 6-character code is included in the confirmation email you receive
+                    after each check-in. Don't have it? Submit a check-in or ask your coach.
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== Dashboard view ===== -->
+        <section id="dashboard">
+            <div class="dash-head">
+                <div>
+                    <h2>Welcome back, <span class="athlete-name" id="athleteName">Athlete</span></h2>
+                    <div class="meta" id="dashMeta"></div>
+                </div>
+                <button class="link-btn" id="logoutBtn">Log Out</button>
+            </div>
+
+            <div id="dashContent"></div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="brand"><span>44</span> Physiques</div>
+        <div style="margin-top:6px;">Chase the Physique &middot; <a href="https://team44physiques.com/">team44physiques.com</a></div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        // Same Apps Script web app the check-in form posts to.
+        var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzQsJLZGRyvYLWfbEOLjdBP-pLIyotG6GPfQXcQPUMaKGIStfG-57sXL8apAmLDXTgslw/exec';
+
+        var DATE_KEY = 'Check-In Date';
+
+        // Numeric metrics to chart, in display order. `key` must match the
+        // field names returned by the Apps Script doGet (the exact sheet
+        // column names).
+        var METRICS = [
+            { key: 'Morning Weight (lbs)',     label: 'Morning Weight',     unit: 'lbs' },
+            { key: 'Avg Sleep (hours)',        label: 'Avg Sleep',          unit: 'hrs' },
+            { key: 'Cardio Sessions',          label: 'Cardio Sessions',    unit: '' },
+            { key: 'Avg Daily Steps',          label: 'Avg Daily Steps',    unit: '' },
+            { key: 'Diet Adherence (1-10)',    label: 'Diet Adherence',     unit: '/10' },
+            { key: 'Training Intensity (1-10)',label: 'Training Intensity', unit: '/10' },
+            { key: 'Energy Level (1-10)',      label: 'Energy',             unit: '/10' },
+            { key: 'Stress Level (1-10)',      label: 'Stress',             unit: '/10' },
+            { key: 'Mood (1-10)',              label: 'Mood',               unit: '/10' },
+            { key: 'Water Intake (gal/day)',   label: 'Water Intake',       unit: 'gal' }
+        ];
+
+        var els = {
+            loginView:  document.getElementById('loginView'),
+            dashboard:  document.getElementById('dashboard'),
+            form:       document.getElementById('loginForm'),
+            email:      document.getElementById('emailInput'),
+            code:       document.getElementById('codeInput'),
+            btn:        document.getElementById('loginBtn'),
+            msg:        document.getElementById('loginMsg'),
+            name:       document.getElementById('athleteName'),
+            meta:       document.getElementById('dashMeta'),
+            content:    document.getElementById('dashContent'),
+            logout:     document.getElementById('logoutBtn')
+        };
+
+        var charts = [];
+        var jsonpCounter = 0;
+
+        // ---------- JSONP helper (CORS workaround for GitHub Pages -> Apps Script) ----------
+        function jsonp(params) {
+            return new Promise(function (resolve, reject) {
+                var cbName = 'jp_' + Date.now() + '_' + (jsonpCounter++);
+                var script = document.createElement('script');
+                var done = false;
+
+                var timer = setTimeout(function () {
+                    if (done) return;
+                    cleanup();
+                    reject(new Error('timeout'));
+                }, 20000);
+
+                function cleanup() {
+                    done = true;
+                    clearTimeout(timer);
+                    try { delete window[cbName]; } catch (e) { window[cbName] = undefined; }
+                    if (script.parentNode) script.parentNode.removeChild(script);
+                }
+
+                window[cbName] = function (data) {
+                    if (done) return;
+                    cleanup();
+                    resolve(data);
+                };
+
+                script.onerror = function () {
+                    if (done) return;
+                    cleanup();
+                    reject(new Error('network'));
+                };
+
+                var query = Object.keys(params).map(function (k) {
+                    return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
+                }).join('&');
+
+                script.src = ENDPOINT + '?' + query + '&callback=' + cbName;
+                document.body.appendChild(script);
+            });
+        }
+
+        // ---------- Helpers ----------
+        function showMsg(text, type) {
+            els.msg.textContent = text;
+            els.msg.className = 'msg ' + type;
+        }
+        function clearMsg() {
+            els.msg.textContent = '';
+            els.msg.className = 'msg';
+        }
+        function setLoading(on) {
+            els.btn.disabled = on;
+            els.btn.innerHTML = on
+                ? '<span class="spinner"></span>Loading…'
+                : 'View My Progress';
+        }
+        function toNum(v) {
+            if (v === null || v === undefined || v === '') return null;
+            var n = parseFloat(String(v).replace(/[^0-9.\-]/g, ''));
+            return isNaN(n) ? null : n;
+        }
+        function fmtDate(v) {
+            if (!v) return '';
+            var d = new Date(v);
+            if (isNaN(d.getTime())) return String(v);
+            return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+        function dateValue(v) {
+            var d = new Date(v);
+            return isNaN(d.getTime()) ? 0 : d.getTime();
+        }
+        function escapeHtml(s) {
+            return String(s === null || s === undefined ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        // ---------- Render ----------
+        function destroyCharts() {
+            charts.forEach(function (c) { try { c.destroy(); } catch (e) {} });
+            charts = [];
+        }
+
+        function renderDashboard(rows, athleteName) {
+            destroyCharts();
+
+            // Sort oldest -> newest by check-in date.
+            rows = rows.slice().sort(function (a, b) {
+                return dateValue(a[DATE_KEY]) - dateValue(b[DATE_KEY]);
+            });
+
+            els.name.textContent = athleteName || 'Athlete';
+            var latest = rows[rows.length - 1];
+            els.meta.textContent = rows.length + ' check-in' + (rows.length === 1 ? '' : 's') +
+                ' · most recent ' + fmtDate(latest[DATE_KEY]);
+
+            if (!rows.length) {
+                els.content.innerHTML =
+                    '<div class="empty-state"><h3>No check-ins yet</h3>' +
+                    '<p>Once you submit a weekly check-in, your trends and history will appear here.</p></div>';
+                return;
+            }
+
+            var labels = rows.map(function (r) { return fmtDate(r[DATE_KEY]); });
+
+            // Build chart cards.
+            var html = '<h3 class="section-title">Trends</h3><div class="charts-grid" id="chartsGrid"></div>';
+            html += '<h3 class="section-title">Check-In History</h3>';
+            html += buildTable(rows);
+            els.content.innerHTML = html;
+
+            var grid = document.getElementById('chartsGrid');
+
+            METRICS.forEach(function (metric, i) {
+                var data = rows.map(function (r) { return toNum(r[metric.key]); });
+                var hasData = data.some(function (v) { return v !== null; });
+                if (!hasData) return; // skip metrics the athlete has no data for
+
+                // latest non-null value
+                var latestVal = null;
+                for (var j = data.length - 1; j >= 0; j--) {
+                    if (data[j] !== null) { latestVal = data[j]; break; }
+                }
+
+                var card = document.createElement('div');
+                card.className = 'chart-card';
+                card.innerHTML =
+                    '<h3>' + escapeHtml(metric.label) + '</h3>' +
+                    '<div class="latest">Latest: <b>' +
+                        (latestVal === null ? '—' : escapeHtml(latestVal)) +
+                        '</b> ' + escapeHtml(metric.unit) + '</div>' +
+                    '<div class="chart-canvas-wrap"><canvas></canvas></div>';
+                grid.appendChild(card);
+
+                var ctx = card.querySelector('canvas').getContext('2d');
+                charts.push(new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            borderColor: '#c41e2a',
+                            backgroundColor: 'rgba(196,30,42,0.12)',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#e02535',
+                            pointBorderColor: '#e02535',
+                            pointRadius: rows.length === 1 ? 5 : 3,
+                            pointHoverRadius: 6,
+                            fill: true,
+                            tension: 0.25,
+                            spanGaps: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#1a1a1a',
+                                borderColor: '#333',
+                                borderWidth: 1,
+                                titleColor: '#fff',
+                                bodyColor: '#fff'
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { color: '#222' },
+                                ticks: { color: '#999', maxRotation: 0, autoSkip: true, maxTicksLimit: 6, font: { size: 10 } }
+                            },
+                            y: {
+                                grid: { color: '#222' },
+                                ticks: { color: '#999', font: { size: 10 } }
+                            }
+                        }
+                    }
+                }));
+            });
+        }
+
+        function buildTable(rows) {
+            // newest first for the table
+            var tableRows = rows.slice().sort(function (a, b) {
+                return dateValue(b[DATE_KEY]) - dateValue(a[DATE_KEY]);
+            });
+
+            var head = '<th>Date</th>' + METRICS.map(function (m) {
+                return '<th>' + escapeHtml(m.label) + '</th>';
+            }).join('');
+
+            var body = tableRows.map(function (r) {
+                var cells = '<td class="date-cell">' + escapeHtml(fmtDate(r[DATE_KEY])) + '</td>';
+                cells += METRICS.map(function (m) {
+                    var v = r[m.key];
+                    return '<td>' + (v === null || v === undefined || v === '' ? '—' : escapeHtml(v)) + '</td>';
+                }).join('');
+                return '<tr>' + cells + '</tr>';
+            }).join('');
+
+            return '<div class="table-scroll"><table><thead><tr>' + head +
+                '</tr></thead><tbody>' + body + '</tbody></table></div>';
+        }
+
+        function showDashboard() {
+            els.loginView.style.display = 'none';
+            els.dashboard.style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+        function showLogin() {
+            destroyCharts();
+            els.dashboard.style.display = 'none';
+            els.loginView.style.display = 'block';
+            els.content.innerHTML = '';
+        }
+
+        // ---------- Events ----------
+        els.form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            clearMsg();
+
+            var email = els.email.value.trim();
+            var code = els.code.value.trim().toUpperCase();
+
+            if (!email || !code) {
+                showMsg('Please enter both your email and access code.', 'error');
+                return;
+            }
+
+            setLoading(true);
+            showMsg('Looking up your check-ins…', 'info');
+
+            jsonp({ action: 'history', email: email, code: code })
+                .then(function (resp) {
+                    setLoading(false);
+                    if (!resp || resp.result !== 'success') {
+                        var m = (resp && resp.message) ? resp.message :
+                            'We couldn’t find a match for that email and code. Please double-check and try again.';
+                        showMsg(m, 'error');
+                        return;
+                    }
+                    clearMsg();
+                    var name = resp.firstName ||
+                        (resp.rows && resp.rows.length && resp.rows[0]['First Name']) || 'Athlete';
+                    renderDashboard(resp.rows || [], name);
+                    showDashboard();
+                })
+                .catch(function (err) {
+                    setLoading(false);
+                    if (err && err.message === 'timeout') {
+                        showMsg('The request timed out. Please check your connection and try again.', 'error');
+                    } else {
+                        showMsg('Something went wrong reaching the server. Please try again in a moment.', 'error');
+                    }
+                });
+        });
+
+        els.logout.addEventListener('click', function () {
+            els.form.reset();
+            clearMsg();
+            showLogin();
+        });
+    })();
+    </script>
+</body>
+</html>
