@@ -331,12 +331,13 @@
 
         var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzQsJLZGRyvYLWfbEOLjdBP-pLIyotG6GPfQXcQPUMaKGIStfG-57sXL8apAmLDXTgslw/exec';
 
-        // Same-origin Cloudflare Worker proxy (forwards to the Apps Script web app
-        // server-side). Using our own domain avoids Google's multi-account routing
-        // and ad-blocker/JSONP issues. If the proxy isn't reachable for any reason,
-        // the code automatically falls back to the direct JSONP call below, so the
-        // dashboard always keeps working. Set to '' to disable the proxy entirely.
-        var PROXY_URL = 'https://team44physiques.com/checkin-data';
+        // Cloudflare Worker proxy (forwards to the Apps Script web app server-side).
+        // Routing data through Cloudflare instead of calling script.google.com from
+        // the browser avoids Google's multi-account routing and ad-blocker/JSONP
+        // failures. If the proxy is ever unreachable, the code automatically falls
+        // back to the direct JSONP call below, so the dashboard always keeps working.
+        // Set to '' to disable the proxy entirely.
+        var PROXY_URL = 'https://checkin-proxy.nursec22b.workers.dev/';
 
         var DATE_KEY = 'Check-In Date';
         var SHOW_KEY = 'Show Date';
