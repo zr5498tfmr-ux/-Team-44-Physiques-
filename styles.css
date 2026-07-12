@@ -398,7 +398,8 @@ section { position: relative; z-index: 1; }
 }
 .service-card:hover::after { transform: scaleY(1); }
 
-.service-icon { font-size: 2rem; display: block; margin-bottom: 24px; opacity: 0.95; }
+.service-icon { display: block; margin-bottom: 24px; color: var(--red); opacity: 0.95; }
+.service-icon svg { width: 32px; height: 32px; display: block; }
 .service-name {
     font-family: 'Oswald', sans-serif;
     font-size: 1.05rem;
@@ -636,7 +637,7 @@ section { position: relative; z-index: 1; }
     text-align: center;
     text-decoration: none;
     padding: 16px;
-    border-radius: 2px;
+    border-radius: 6px;
     transition: all 0.3s ease;
 }
 .pricing-btn-solid { background: var(--red); color: var(--white); }
@@ -671,7 +672,7 @@ section { position: relative; z-index: 1; }
     padding: 14px 20px;
     background: rgba(196,30,42,0.04);
     border: 1px solid rgba(196,30,42,0.1);
-    border-radius: 10px;
+    border-radius: 8px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -737,7 +738,7 @@ section { position: relative; z-index: 1; }
 .inquiry-form {
     background: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 8px;
     padding: 36px;
     display: flex;
     flex-direction: column;
